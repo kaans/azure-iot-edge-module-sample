@@ -24,4 +24,4 @@ jobs:
         context: ./modules/SampleModule
         file: ./modules/SampleModule/Dockerfile.${{ matrix.arch }}
         push: true
-        tags: iot_edge_sample_module:latest-${{ matrix.arch }}
+        tags: ghcr.io/${{ github.repository }}:latest-${{ matrix.arch }}
