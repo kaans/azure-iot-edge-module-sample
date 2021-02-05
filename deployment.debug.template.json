@@ -13,7 +13,7 @@
               "docker": {
                 "username": "$CONTAINER_REGISTRY_USERNAME_docker",
                 "password": "$CONTAINER_REGISTRY_PASSWORD_docker",
-                "address": "ghcr.io"
+                "address": "$CONTAINER_REGISTRY_HOSTNAME_docker"
               }
             }
           }
@@ -24,6 +24,11 @@
             "settings": {
               "image": "mcr.microsoft.com/azureiotedge-agent:1.0",
               "createOptions": {}
+            },
+            "env": {
+              "SendRuntimeQualityTelemetry": {
+                "value": "false"
+              }
             }
           },
           "edgeHub": {
@@ -118,9 +123,9 @@
       "properties.desired": {
         "schemaVersion": "1.0",
         "routes": {
-          "SampleModuleToIoTHub": "FROM /messages/modules/SampleModule/outputs/* INTO BrokeredEndpoint(\"/modules/NodeREDonIoTEdge/inputs/sample1\")",
+          "SampleModuleToNodeRed": "FROM /messages/modules/SampleModule/outputs/* INTO BrokeredEndpoint(\"/modules/NodeREDonIoTEdge/inputs/sampleModule\")",
           "FromNodeREDonIoTEdge": "FROM /messages/modules/NodeREDonIoTEdge/outputs/* INTO $upstream",
-          "SimulatedTemperatureSensorToIoTHub": "FROM /messages/modules/SimulatedTemperatureSensor/* INTO BrokeredEndpoint(\"/modules/NodeREDonIoTEdge/inputs/simTemp\")"
+          "SimulatedTemperatureSensorToNodeRed": "FROM /messages/modules/SimulatedTemperatureSensor/* INTO BrokeredEndpoint(\"/modules/NodeREDonIoTEdge/inputs/simTemp\")"
         },
         "storeAndForwardConfiguration": {
           "timeToLiveSecs": 15
