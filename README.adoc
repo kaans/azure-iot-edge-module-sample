@@ -13,12 +13,12 @@ under _Prerequisites_ to be able to use this repository.
 
 Pushing the container images to a container registry (like
 https://docs.github.com/en/packages/learn-github-packages/about-github-packages[GitHub Container Package] or https://hub.docker.com/[Docker Hub])
-requires logging in first. For the login, a username and a _personal
-access token_ (PAT) is required, in addition to the hostname of the registry
+requires logging in first. For the login, a username and a password (or a _personal
+access token_ (PAT) in case of GitHub Container Package) is required, in addition to the hostname of the registry
 (see 
-https://docs.github.com/en/actions/guides/publishing-docker-images[guide in GitHub Docs] for reference).
+https://docs.github.com/en/actions/guides/publishing-docker-images[guide in GitHub Docs] for examples).
 
-To generate the _personal acccess token_, go to your account
+To generate the _personal acccess token for GitHub_, go to your account
 settings and open _Developer settings_ -> _Personal access tokens_.
 Click on _Generate new token_ and generate a new token.
 
