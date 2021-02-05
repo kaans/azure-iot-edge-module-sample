@@ -3,6 +3,7 @@
 var Transport = require('azure-iot-device-mqtt').Mqtt;
 var Client = require('azure-iot-device').ModuleClient;
 var Message = require('azure-iot-device').Message;
+var os = require('os');
 
 var localClient = undefined;
 
@@ -60,19 +61,14 @@ function printResultFor(op) {
 
 
 setInterval(function () {
-  // Simulate telemetry.
-  var temperature = 20 + (Math.random() * 15);
   var message = new Message(JSON.stringify({
-    temperature: temperature,
-    humidity: 60 + (Math.random() * 20)
+    cpu: os.cpus(),
+    totalmem: os.totalmem(),
+    freemem: os.freemem()
   }));
 
-  // Add a custom application property to the message.
-  // An IoT hub can filter on these properties without access to the message body.
-  message.properties.add('temperatureAlert', (temperature > 30) ? 'true' : 'false');
-
-  console.log('Sending temperature message: ' + message.getData());
+  console.log('Sending cpu and memory stats: ' + message.getData());
 
   // Send the message.
-  localClient.sendOutputEvent('temperature', message, printResultFor('Sending temperature'));
+  localClient.sendOutputEvent('stats', message, printResultFor('Sending cpu and memory stats'));
 }, 5000);
