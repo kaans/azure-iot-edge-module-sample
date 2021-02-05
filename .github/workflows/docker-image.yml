@@ -22,7 +22,7 @@ jobs:
             platform: linux/arm/v7
           - docker: arm64v8
             platform: linux/arm64
-      max-parallel: 1
+      #max-parallel: 1
       fail-fast: false
 
     steps:
