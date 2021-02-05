@@ -1,0 +1,41 @@
+= Sample module for Azure IoT Edge
+
+== Prerequisites
+
+This project is inspired by the instructions found in
+https://docs.microsoft.com/de-de/azure/iot-edge/how-to-deploy-modules-vscode?view=iotedge-2018-06[the Azure documentation]. Make sure to follow the steps
+under _Prerequisites_ to be able to use this repository.
+
+== Setup credentials for container registry
+
+Pushing the container images to a container registry (like
+https://docs.github.com/en/packages/learn-github-packages/about-github-packages[GitHub Container Package] or https://hub.docker.com/[Docker Hub])
+requires logging in first. For the login, a username and a _personal
+access token_ (PAT) is required, in addition to the hostname of the registry
+(see 
+https://docs.github.com/en/actions/guides/publishing-docker-images[guide in GitHub Docs] for reference).
+
+To generate the _personal acccess token_, go to your account
+settings and open _Developer settings_ -> _Personal access tokens_.
+Click on _Generate new token_ and generate a new token.
+
+NOTE: Store the generated token in a safe place! After closing the 
+page where the token is displayed, it can not be retrieved anymore.
+Also make sure that nobody else can access the token!
+
+The credentials and the hostname for the container registry are stored in
+GitHub secrets. To create the secrets, go to _Settings_ in your repository
+where the workflow will be executed and select _Secrets_. Add the following
+_repository secets_:
+
+|===
+
+| Name | Value
+
+| CONTAINER_REGISTRY_HOSTNAME | Hostname; Example: ghcr.io
+| CONTAINER_REGISTRY_TOKEN | Password or Personal acccess token (PAT)
+| CONTAINER_REGISTRY_USERNAME | Your username
+
+|===
+
+
