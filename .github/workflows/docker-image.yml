@@ -1,0 +1,26 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  DOCKER_ROOT_FOLDER: ./modules/SampleModule
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [amd64, arm32v7, arm64v8]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build ${{DOCKER_ROOT_FOLDER}} --file Dockerfile --tag my-image-name:$(date +%s)
+      with:
+        arch-type: $ {{ matrix.arch }}
