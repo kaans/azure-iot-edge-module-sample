@@ -1,5 +1,6 @@
 = Sample module for Azure IoT Edge
 
+[link=https://github.com/kaans/azure-iot-edge-module-sample/actions]
 image::https://github.com/kaans/azure-iot-edge-module-sample/workflows/Docker%20Image%20CI/badge.svg?branch=main[Docker Image CI]
 
 == Prerequisites
