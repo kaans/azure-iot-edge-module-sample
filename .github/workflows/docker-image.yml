@@ -17,7 +17,7 @@ jobs:
       matrix:
         arch: [amd64, arm32v7, arm64v8]
       max-parallel: 1
-      fail-fast: true
+      fail-fast: false
 
     steps:
     - uses: actions/checkout@v2
