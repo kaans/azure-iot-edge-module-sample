@@ -1,5 +1,7 @@
 FROM arm64v8/node:10-slim
 
+LABEL org.opencontainers.image.source https://github.com/kaans/azure-iot-edge-module-sample
+
 WORKDIR /app/
 
 COPY package*.json ./

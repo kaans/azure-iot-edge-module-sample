@@ -4,10 +4,15 @@ var Transport = require('azure-iot-device-mqtt').Mqtt;
 var Client = require('azure-iot-device').ModuleClient;
 var Message = require('azure-iot-device').Message;
 
+var localClient = undefined;
+
+
 Client.fromEnvironment(Transport, function (err, client) {
   if (err) {
     throw err;
   } else {
+    localClient = client;
+
     client.on('error', function (err) {
       throw err;
     });
@@ -53,6 +58,7 @@ function printResultFor(op) {
   };
 }
 
+
 setInterval(function () {
   // Simulate telemetry.
   var temperature = 20 + (Math.random() * 15);
@@ -68,5 +74,5 @@ setInterval(function () {
   console.log('Sending temperature message: ' + message.getData());
 
   // Send the message.
-  client.sendOutputEvent('temperature', message, printResultFor('Sending temperature'));
+  localClient.sendOutputEvent('temperature', message, printResultFor('Sending temperature'));
 }, 5000);

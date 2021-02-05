@@ -13,7 +13,7 @@
               "docker": {
                 "username": "$CONTAINER_REGISTRY_USERNAME_docker",
                 "password": "$CONTAINER_REGISTRY_PASSWORD_docker",
-                "address": "docker.pkg.github.com"
+                "address": "ghcr.io"
               }
             }
           }
@@ -66,6 +66,37 @@
               "image": "${MODULES.SampleModule}",
               "createOptions": {}
             }
+          },
+          "NodeREDonIoTEdge": {
+            "settings": {
+              "image": "marketplace.azurecr.io/1604376875527/wedx-nodered",
+              "createOptions": "{\"HostConfig\":{\"PortBindings\":{\"1880/tcp\":[{\"HostPort\":\"1880\"}]},\"Privileged\":true}}"
+            },
+            "type": "docker",
+            "version": "1.0",
+            "env": {
+              "TZ": {
+                "value": "Europe/Berlin"
+              },
+              "NODE_RED_CREDENTIAL_SECRET": {
+                "value": "nodered"
+              },
+              "NODE_RED_ENABLE_PROJECTS": {
+                "value": "true"
+              }
+            },
+            "status": "running",
+            "restartPolicy": "always"
+          },
+          "SimulatedTemperatureSensor": {
+            "settings": {
+              "image": "mcr.microsoft.com/azureiotedge-simulated-temperature-sensor:1.0",
+              "createOptions": ""
+            },
+            "type": "docker",
+            "version": "1.0",
+            "status": "running",
+            "restartPolicy": "always"
           }
         }
       }
@@ -74,10 +105,12 @@
       "properties.desired": {
         "schemaVersion": "1.0",
         "routes": {
-          "SampleModuleToIoTHub": "FROM /messages/modules/SampleModule/outputs/* INTO $upstream"
+          "SampleModuleToIoTHub": "FROM /messages/modules/SampleModule/outputs/* INTO BrokeredEndpoint(\"/modules/NodeREDonIoTEdge/inputs/sample1\")",
+          "FromNodeREDonIoTEdge": "FROM /messages/modules/NodeREDonIoTEdge/outputs/* INTO $upstream",
+          "SimulatedTemperatureSensorToIoTHub": "FROM /messages/modules/SimulatedTemperatureSensor/* INTO BrokeredEndpoint(\"/modules/NodeREDonIoTEdge/inputs/simTemp\")"
         },
         "storeAndForwardConfiguration": {
-          "timeToLiveSecs": 7200
+          "timeToLiveSecs": 15
         }
       }
     }
