@@ -52,3 +52,11 @@ jobs:
         tags: ghcr.io/${{ github.repository }}:latest-${{ matrix.arch.docker }}
         platforms: ${{ matrix.arch.platform }}
 
+    - uses: docker/build-push-action@v2
+      name: Generate debug image for ${{ matrix.arch.docker }}
+      with:
+        context: ./modules/SampleModule
+        file: ./modules/SampleModule/Dockerfile.${{ matrix.arch.docker }}.debug
+        push: true
+        tags: ghcr.io/${{ github.repository }}:latest-${{ matrix.arch.docker }}-debug
+        platforms: ${{ matrix.arch.platform }}
