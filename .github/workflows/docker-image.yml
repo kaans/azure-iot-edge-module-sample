@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [ main ]
 
-env:
-  DOCKER_ROOT_FOLDER: ./modules/SampleModule
-
 jobs:
 
   build:
@@ -24,7 +21,7 @@ jobs:
     - uses: docker/build-push-action@v2
       name: Generate production image for ${{ matrix.arch }}
       with:
-        context: ${{ DOCKER_ROOT_FOLDER }}
-        file: ${{ DOCKER_ROOT_FOLDER }}/Dockerfile.${{ matrix.arch }}
+        context: ./modules/SampleModule
+        file: ./modules/SampleModule/Dockerfile.${{ matrix.arch }}
         push: true
         tags: iot_edge_sample_module:latest-${{ matrix.arch }}
