@@ -14,13 +14,17 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    
     strategy:
       matrix:
         arch: [amd64, arm32v7, arm64v8]
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build ${{DOCKER_ROOT_FOLDER}} --file Dockerfile --tag my-image-name:$(date +%s)
+    - uses: docker/build-push-action@v2
+      name: Generate production image for ${{ matrix.arch }}
       with:
-        arch-type: $ {{ matrix.arch }}
+        context: ${{ DOCKER_ROOT_FOLDER }}
+        file: ${{ DOCKER_ROOT_FOLDER }}/Dockerfile.${{ matrix.arch }}
+        push: true
+        tags: iot_edge_sample_module:latest-${{ matrix.arch }}
