@@ -39,6 +39,11 @@ jobs:
     # https://github.com/docker/setup-buildx-action
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
+
+    - name: Get the release name
+      shell: bash
+      run: echo "::set-output name=release::${GITHUB_REF#refs/tags/}"
+      id: release_ref
       
     - uses: docker/build-push-action@v2
       name: Generate production image for ${{ matrix.arch.docker }}
@@ -46,5 +51,5 @@ jobs:
         context: ./modules/SampleModule
         file: ./modules/SampleModule/Dockerfile.${{ matrix.arch.docker }}
         push: true
-        tags: ghcr.io/${{ github.repository }}:${{ github.ref }}-${{ matrix.arch.docker }}
+        tags: ghcr.io/${{ github.repository }}:${{ steps.release_ref.outputs.release }}-${{ matrix.arch.docker }}
         platforms: ${{ matrix.arch.platform }}
