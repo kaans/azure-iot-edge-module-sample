@@ -46,5 +46,5 @@ jobs:
         context: ./modules/SampleModule
         file: ./modules/SampleModule/Dockerfile.${{ matrix.arch.docker }}
         push: true
-        tags: ghcr.io/${{ github.repository }}:${GITHUB_REF}-${{ matrix.arch.docker }}
+        tags: ghcr.io/${{ github.repository }}:${{ env.GITHUB_REF }}-${{ matrix.arch.docker }}
         platforms: ${{ matrix.arch.platform }}
